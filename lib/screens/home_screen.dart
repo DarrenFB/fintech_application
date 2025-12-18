@@ -1,5 +1,3 @@
-// ignore_for_file: unused_import
-
 import 'package:fintech_application/widgets/custom_app_bar.dart';
 import 'package:fintech_application/widgets/investment%20graph%20section/horizontal_slider_wheel.dart';
 import 'package:fintech_application/widgets/money%20option%20widgets/money_option_buttons.dart';

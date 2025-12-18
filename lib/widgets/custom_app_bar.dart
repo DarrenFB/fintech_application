@@ -24,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
                   ),
                   child: ClipOval(
                     child: Image.asset(
-                      "assets/images/orangebg_blackman_portrait.png", // change this later to image for user profile
+                      "assets/images/orangebg_blackman_portrait.png", 
                       fit: BoxFit.cover,
                     ),
                   ),
