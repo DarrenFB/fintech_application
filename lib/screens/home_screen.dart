@@ -1,5 +1,6 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, must_be_immutable, unused_field, override_on_non_overriding_member
 
+import 'package:fintech_application/controllers/data_controller.dart';
 import 'package:fintech_application/widgets/custom_app_bar.dart';
 import 'package:fintech_application/widgets/investment%20graph%20section/horizontal_slider_wheel.dart';
 import 'package:fintech_application/widgets/money%20option%20widgets/money_option_buttons.dart';
@@ -10,10 +11,23 @@ import 'package:fintech_application/widgets/my%20portfolio%20section/portfolio_p
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _controller = Get.put(DataController());
+  
+  @override
+  void iniState() {
+    super.initState();
+    _controller.getStockPrices();
+  }
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
