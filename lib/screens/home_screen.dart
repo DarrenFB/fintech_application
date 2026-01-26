@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 12),
-                PortfolioPreview(),
+                PortfolioPreview(controller: null,),
                 SizedBox(height: 10),
               ],
             ),
@@ -146,5 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  double calculatorPriceChange() {
+    double opening = _controller.amazonStock.value.bars.first.open;
+    double closing = _controller.amazonStock.value.bars.last.close;
+
+    if (opening > closing) {
+      return -((opening - closing) / opening) * 100;
+    } else {
+      return ((closing - opening) / opening) * 100;
+    }
   }
 }

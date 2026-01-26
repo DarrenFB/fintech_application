@@ -1,3 +1,4 @@
+import 'package:fintech_application/models/stock.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -8,15 +9,21 @@ class StockTrendCard extends StatelessWidget {
   final String percentChange;
   final bool isPositive;
   final List<FlSpot> data;
+  final AlphaVantageDailyResponse;
 
   const StockTrendCard({
     super.key,
     required this.company,
     required this.ticker,
+
+    /* required this.price,
+    required this.percentChange,
+    required this.isPositive, */
+    required this.data,
     required this.price,
     required this.percentChange,
     required this.isPositive,
-    required this.data,
+    this.AlphaVantageDailyResponse,
   });
 
   @override
@@ -62,10 +69,7 @@ class StockTrendCard extends StatelessWidget {
             children: [
               Text(
                 ticker,
-                style: const TextStyle(
-                  color: Colors.white54,
-                  fontSize: 12,
-                ),
+                style: const TextStyle(color: Colors.white54, fontSize: 12),
               ),
               Text(
                 price,
@@ -94,17 +98,14 @@ class StockTrendCard extends StatelessWidget {
                   LineChartBarData(
                     spots: data,
                     isCurved: true,
-                    color: isPositive
-                        ? Colors.greenAccent
-                        : Colors.redAccent,
+                    color: isPositive ? Colors.greenAccent : Colors.redAccent,
                     barWidth: 2,
                     dotData: FlDotData(show: false),
                     belowBarData: BarAreaData(
                       show: true,
-                      color: (isPositive
-                              ? Colors.greenAccent
-                              : Colors.redAccent)
-                          .withOpacity(0.15),
+                      color:
+                          (isPositive ? Colors.greenAccent : Colors.redAccent)
+                              .withOpacity(0.15),
                     ),
                   ),
                 ],

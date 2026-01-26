@@ -1,55 +1,66 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
+import 'package:fintech_application/utils/utilities.dart';
 import 'package:flutter/material.dart';
 
 class PortfolioPreview extends StatelessWidget {
-  const PortfolioPreview({super.key});
+  final dynamic controller;
+
+  const PortfolioPreview({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // ── Header ─────────────────────────────
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              'My Portfolio',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+    final priceChange = Utilities.calculatorPriceChange(controller.amazonStock.value.bars.first).$1;
+    final portfolioIncrease = priceChange >= 0;
+    
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ── Header ─────────────────────────────
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                'My Portfolio',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            Text(
-              'View All',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w300,
+              Text(
+                'View All',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
-            ),
-          ],
-        ),
-
-        const SizedBox(height: 14),
-
-        // ── Portfolio Card ─────────────────────
-        Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF1E1E1E),
-            borderRadius: BorderRadius.circular(14),
+            ],
           ),
-          child: Column(
-            children: [
-              PortfolioItem(
-                Image.asset('assets/images/amazon_icon.png'),
-                companyName: 'Amazon',
-                ticker: 'AMZN',
-                value: '\$132.00',
-                percentChange: '+9.054%',
-                isPositive: true,
-              ),
-              /*
+
+          const SizedBox(height: 14),
+
+          // ── Portfolio Card ─────────────────────
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF1E1E1E),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Column(
+              children: [
+                PortfolioItem(
+                  Image.asset('assets/images/amazon_icon.png'),
+                  companyName: 'Amazon',
+                  ticker: 'AMZN',
+                  value: '\$${controller.amazonStock.value.bars.first.close}',
+                  percentChange: portfolioIncrease
+                      ? "+${priceChange.toStringAsFixed(2)}%"
+                      : "-${priceChange.toStringAsFixed(2)}%",
+                  isPositive: portfolioIncrease,
+                ),
+                /*
               const Divider(color: Colors.white10, height: 1),
               PortfolioItem(
                 Image.asset('assets/images/apple_logo.png'),
@@ -69,10 +80,11 @@ class PortfolioPreview extends StatelessWidget {
                 isPositive: false,
                 
               ),*/
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -126,10 +138,7 @@ class PortfolioItem extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   ticker,
-                  style: const TextStyle(
-                    color: Colors.white54,
-                    fontSize: 12,
-                  ),
+                  style: const TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],
             ),
@@ -151,9 +160,7 @@ class PortfolioItem extends StatelessWidget {
               Text(
                 percentChange,
                 style: TextStyle(
-                  color: isPositive
-                      ? Colors.blueAccent
-                      : Colors.redAccent,
+                  color: isPositive ? Colors.blueAccent : Colors.redAccent,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
